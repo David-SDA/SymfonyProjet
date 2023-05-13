@@ -14,7 +14,7 @@ class EntrepriseController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         // récupérer les entreprises de la BDD
-        $entreprises = $entityManager->getRepository(Entreprise::class)->findAll();
+        $entreprises = $entityManager->getRepository(Entreprise::class)->findby([], ["raisonSociale" => "ASC"]);
         return $this->render('entreprise/index.html.twig', [
             'entreprises' => $entreprises
         ]);

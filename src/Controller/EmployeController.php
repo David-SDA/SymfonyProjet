@@ -14,7 +14,7 @@ class EmployeController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         // récupérer les employés de la BDD
-        $employes = $entityManager->getRepository(Employe::class)->findAll();
+        $employes = $entityManager->getRepository(Employe::class)->findBy([], ["nom" => "ASC"]);
         return $this->render('employe/index.html.twig', [
             'employes' => $employes
         ]);
