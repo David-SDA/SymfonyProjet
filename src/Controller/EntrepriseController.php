@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Entreprise;
+use App\Form\EntrepriseType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class EntrepriseController extends AbstractController
 {
@@ -19,4 +21,34 @@ class EntrepriseController extends AbstractController
             'entreprises' => $entreprises
         ]);
     }
+
+    #[Route('/entreprise/add', name: 'add_entreprise')]
+    public function add(EntityManagerInterface $entityManager, Entreprise $entreprise = null, Request $request): Response{
+        
+        $form = $this->createForm(EntrepriseType::class, $entreprise);
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid()){
+            $entreprise = $form->getData();
+            // prepare
+            $entityManager->persist($entreprise);
+            // insert into (execute)
+            $entityManager->flush();
+
+            return $this->redirectToRoute("app_entreprise");
+        }
+
+        // vue pour afficher le formulaire d'ajout
+        return $this->render('entreprise/add.html.twig', [
+            "formAddEntreprise" => $form->createView()
+        ]);
+    }
+
+    #[Route('/entreprise/{id}', name: 'show_entreprise')]
+    public function show(Entreprise $entreprise): Response{
+        return $this->render('entreprise/show.html.twig', [
+            'entreprise' => $entreprise
+        ]);
+    }
+
 }
