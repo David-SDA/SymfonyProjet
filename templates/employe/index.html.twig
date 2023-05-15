@@ -8,6 +8,7 @@
     <a class="btn btn-primary" href="{{ path("add_employe") }}">Ajouter un employé</a> <br>
 
     {% for employe in employes %}
-       <a href="{{ path("show_employe", {"id" : employe.id}) }}">{{ employe }}</a> <br>
+       <a href="{{ path("show_employe", {"id" : employe.id}) }}">{{ employe }}</a>
+       <a class="btn btn-warning" href="{{ path("edit_employe", {"id" : employe.id}) }}">Éditer un employé</a> <br>
     {% endfor %}
 {% endblock %}

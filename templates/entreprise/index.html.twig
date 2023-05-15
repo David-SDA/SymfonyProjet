@@ -8,7 +8,8 @@
     <a class="btn btn-primary" href="{{ path("add_entreprise") }}">Ajouter une entreprise</a> <br>
 
     {% for entreprise in entreprises %}
-       <a href="{{ path("show_entreprise", {"id" : entreprise.id}) }}"> {{ entreprise }} </a> <br>
+       <a href="{{ path("show_entreprise", {"id" : entreprise.id}) }}">{{ entreprise }}</a>
+       <a class="btn btn-warning" href="{{ path("edit_entreprise", {"id" : entreprise.id}) }}">Éditer une entreprise</a> <br>
     {% endfor %}
 
 {% endblock %}
