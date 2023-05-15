@@ -49,6 +49,15 @@ class EmployeController extends AbstractController
         ]);
     }
 
+    #[Route('/employe/{id}/delete', name: 'delete_employe')]
+    public function delete(EntityManagerInterface $entityManager, Employe $employe = null): Response{
+
+        $entityManager->remove($employe);
+        $entityManager->flush();
+
+        return $this->redirectToRoute("app_employe");
+    }
+
     #[Route('/employe/{id}', name: 'show_employe')]
     public function show(Employe $employe): Response{
         return $this->render('employe/show.html.twig', [
